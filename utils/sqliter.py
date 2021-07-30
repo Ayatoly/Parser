@@ -1,5 +1,6 @@
 import sqlite3
-
+from parser import parce
+from datetime import datetime
 
 class SQLighter:
 
@@ -32,17 +33,32 @@ class SQLighter:
         user_ids = self.cursor.execute('select * from "id_users"').fetchall()
         if user_id not in user_ids:
             try:
-                return self.cursor.execute(
+                 self.cursor.execute(
                     'INSERT INTO "id_users" ("user_id","status") VALUES (?,?)',
-                    (user_id, status),
+                    (user_id, status)
                 )
-            # except:
-            #     print('Он уже есть в базе')
+                 self.connection.commit()
+            except:
+                 print('Он уже есть в базе')
+
 
     def update_subcriptions(self,user_id,status):
         '''Обновляем статус подписки'''
         return self.cursor.execute('UPDATE "id_users" SET "status" = ? WHERE "user_id" = ?',(status,user_id))
 
+    def add_car(self):
+        for i in parce():
+            try:
+                 self.cursor.execute('INSERT INTO "Jeep_auto_ru"(links,price,city,date) VALUES (?,?,?,?)',
+                                     (i[0],i[1],i[2],datetime.now()))
+            except:
+                pass
+
+
     def close(self):
         '''Закрываем соединение с БД'''
         self.connection.close()
+
+
+
+
