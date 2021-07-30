@@ -8,7 +8,6 @@ import asyncio
 import aioschedule as schedule
 
 
-
 logging.basicConfig(level=logging.INFO)
 
 async def scheduler():
