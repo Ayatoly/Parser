@@ -52,7 +52,9 @@ class SQLighter:
             try:
                  self.cursor.execute('INSERT INTO "Jeep_auto_ru"(links,price,city,date) VALUES (?,?,?,?)',
                                      (i[0],i[1],i[2],datetime.now()))
+                 self.connection.commit()
                  sned_messange(i[0])
+
             except:
                 pass
 

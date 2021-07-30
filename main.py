@@ -1,6 +1,8 @@
 
 import logging
 from aiogram import executor
+from utils.sqliter import SQLighter
+from utils.hendlers import dp
 
 import asyncio
 import aioschedule as schedule
@@ -10,7 +12,7 @@ import aioschedule as schedule
 logging.basicConfig(level=logging.INFO)
 
 async def scheduler():
-    schedule.every(5).seconds.do()
+    schedule.every(5).seconds.do(SQLighter.add_car)
     while True:
         await schedule.run_pending()
         await asyncio.sleep(30)

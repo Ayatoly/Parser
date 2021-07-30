@@ -1,8 +1,9 @@
 
 
 
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, types
 from sqliter import SQLighter
+
 
 db = SQLighter()
 
