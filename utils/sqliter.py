@@ -1,6 +1,7 @@
 import sqlite3
 from parser import parce
 from datetime import datetime
+from hendlers import sned_messange
 
 class SQLighter:
 
@@ -51,6 +52,7 @@ class SQLighter:
             try:
                  self.cursor.execute('INSERT INTO "Jeep_auto_ru"(links,price,city,date) VALUES (?,?,?,?)',
                                      (i[0],i[1],i[2],datetime.now()))
+                 sned_messange(i[0])
             except:
                 pass
 
@@ -58,6 +60,7 @@ class SQLighter:
     def close(self):
         '''Закрываем соединение с БД'''
         self.connection.close()
+
 
 
 

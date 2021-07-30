@@ -35,3 +35,12 @@ async def unsubscribe(message: types.Message):
         # Если он уже есть то просто обновляем ему статус подписки
         db.add_subcripter(message.from_user.id,False)
         await message.answer('Вы успешно отписанны от рассылки ')
+
+async def sned_messange(url_a):
+    for i in db.get_all_ids():
+        try:
+            await dp.bot.send_message(
+                int(i[1]),
+                f"Появился новый автомобиль на auto.ru {url_a}")
+        except:
+            pass
