@@ -1,7 +1,11 @@
+import sys
+
 from datetime import datetime
 import sqlite3
 
 from utils.parser import get_cars
+
+sys.path.append("..")
 from hendlers.hendlers import send_messange
 
 
