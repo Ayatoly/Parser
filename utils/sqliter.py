@@ -13,6 +13,7 @@ class SQLighter:
         self.cursor = self.connection.cursor()
 
     def get_all_ids(self) -> None:
+        """Список всех пользователей"""
         return self.cursor.execute('select * from "id_users"').fetchall()
 
     def get_subscription(self, status: bool = True) -> tuple:
@@ -33,6 +34,7 @@ class SQLighter:
         return bool(len(result))
 
     def add_subcripter(self, user_id: int, status: bool = True) -> None:
+        """Добавление пользователя в базу"""
         user_ids = self.cursor.execute('select * from "id_users"').fetchall()
         if user_id not in user_ids:
             try:
