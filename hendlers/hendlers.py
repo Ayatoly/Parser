@@ -1,6 +1,10 @@
+import sys
+
 from aiogram import Bot, Dispatcher, types
 from sqliter import SQLighter
-from data import config
+
+sys.path.append("../data/")
+import config
 
 
 db = SQLighter()
