@@ -2,19 +2,20 @@ import logging
 import asyncio
 
 from aiogram import executor
-import aioschedule as schedule
 
 from utils.sqliter import SQLighter
 from hendlers.handlers import dp
+from utils.parser import get_cars
 
 
 logging.basicConfig(level=logging.INFO)
 
 
 async def scheduler():
-    schedule.every(5).seconds.do(SQLighter.add_car)
+    sql_obj = SQLighter()
     while True:
-        await schedule.run_pending()
+        cars = get_cars("https://auto.ru/moskva/cars/jeep/all/?sort=cr_date-desc&top_days=1")
+        sql_obj.add_cars(cars)
         await asyncio.sleep(30)
 
 
