@@ -2,16 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 
 
-URL = 'https://auto.ru/moskva/cars/jeep/all/?sort=cr_date-desc&top_days=1'
-HEADERS = {
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15',
-    'accept': '*/*'
-}
-
-
 def get_html(url: str, params=None) -> str:
     """Получение контента страницы"""
-    r = requests.get(url, headers=HEADERS, params=params)
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15',
+        'accept': '*/*'
+    }
+    r = requests.get(url, headers=headers, params=params)
     if r.status_code == 200:
         return r.content.decode('utf-8')
     else:
@@ -19,12 +16,13 @@ def get_html(url: str, params=None) -> str:
         return ""
 
     
-def get_content(get_html: str) -> list:
+def get_cars(url: str) -> list:
     """Получение списка автомобилий"""
     cars_all = []
-    if not get_html:
+    content = get_html(url)
+    if not content:
         return cars_all
-    soup = BeautifulSoup(get_html, 'html.parser')
+    soup = BeautifulSoup(content, 'html.parser')
     cars = soup.findAll('div', class_='ListingItem-module__description')
     for car in cars:
         try:
@@ -38,8 +36,3 @@ def get_content(get_html: str) -> list:
             print("Данные не найдены для {}".format(car))
     print(cars_all)
     return cars_all
-
-
-def parce():
-    """Запуск парсера auto.ru"""
-    get_content(get_html(url=URL))
