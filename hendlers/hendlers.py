@@ -1,16 +1,15 @@
-import sys
+#import sys
 
 from aiogram import Bot, Dispatcher, types
 from sqliter import SQLighter
 
-sys.path.append("..")
-print(sys.path)
-from data import config
+#sys.path.append("..")
+from config import BOT_TOKEN
 
 
 db = SQLighter()
 
-bot = Bot(token=config.BOT_TOKEN)
+bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
 
