@@ -1,9 +1,6 @@
-#import sys
-
 from aiogram import Bot, Dispatcher, types
 from sqliter import SQLighter
 
-#sys.path.append("..")
 from config import BOT_TOKEN
 
 
