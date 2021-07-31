@@ -1,7 +1,12 @@
+import sys
+
 from datetime import datetime
 import sqlite3
 
 from utils.parser import get_cars
+
+sys.path.append("../hendlers/")
+from handlers import send_message_handler
 
 
 class SQLighter:
@@ -55,7 +60,7 @@ class SQLighter:
                  self.cursor.execute('INSERT INTO "Jeep_auto_ru"(links,price,city,date) VALUES (?,?,?,?)',
                                      (car[0], car[1], car[2], datetime.now()))
                  self.connection.commit()
-                 send_messange(car[0])
+                 send_message_handler(car[0])
             except:
                 pass
 
