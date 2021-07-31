@@ -50,7 +50,7 @@ class SQLighter:
         """Обновляем статус подписки"""
         return self.cursor.execute('UPDATE "id_users" SET "status" = ? WHERE "user_id" = ?',(status,user_id))
 
-    def add_cars(self, cars: list) -> None:
+    async def add_cars(self, cars: list) -> None:
         """Добавление машины в базу"""
         for car in cars:
             try:
@@ -60,7 +60,7 @@ class SQLighter:
             except:
                 print("Машина уже есть в базе")
             else:
-                send_message_handler(car[0])
+                await send_message_handler(car[0])
 
     def close(self) -> None:
         """Закрываем соединение с БД"""
