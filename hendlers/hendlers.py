@@ -1,5 +1,6 @@
 from aiogram import Bot, Dispatcher, types
 from sqliter import SQLighter
+from data import config
 
 
 db = SQLighter()
