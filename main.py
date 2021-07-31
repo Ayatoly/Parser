@@ -5,7 +5,7 @@ from aiogram import executor
 import aioschedule as schedule
 
 from utils.sqliter import SQLighter
-from utils.hendlers import dp
+from hendlers.hendlers import dp
 
 
 logging.basicConfig(level=logging.INFO)
