@@ -6,6 +6,8 @@ import sqlite3
 from utils.parser import get_cars
 
 sys.path.append("../hendlers/")
+for path in sys.path:
+    print(path)
 from hendlers import send_messange
 
 
