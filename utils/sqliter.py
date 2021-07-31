@@ -12,18 +12,16 @@ class SQLighter:
         self.connection = sqlite3.connect('db.db')
         self.cursor = self.connection.cursor()
 
-    def get_all_ids(self) -> None:
+    def get_all_ids(self) -> tuple:
         """Список всех пользователей"""
         return self.cursor.execute('select * from "id_users"').fetchall()
 
     def get_subscription(self, status: bool = True) -> tuple:
         """Получаем всех активных подписчеков бота"""
-        result = self.cursor.execute(
+        return self.cursor.execute(
             'SELECT * FROM "id_users" WHERE "status" = ?',
             (status,),
         ).fetchall()
-        self.connection.commit()
-        return result
 
     def subcripter_exists(self, user_id: int) -> bool:
         """Проверяем есть ли юзер в базе"""
