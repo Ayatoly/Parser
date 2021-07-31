@@ -49,5 +49,5 @@ async def send_message_handler(url_a: str) -> None:
                 int(i[1]),
                 f"Появился новый автомобиль на auto.ru {url_a}"
             )
-        except:
-            pass
+        except Exception as e0:
+            print("Произошла ошибка в момент отправки сообщения - {}".format(e0))
