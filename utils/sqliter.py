@@ -2,7 +2,7 @@ from datetime import datetime
 import sqlite3
 
 from utils.parser import get_cars
-from utils.hendlers import send_messange
+from hendlers.hendlers import send_messange
 
 
 class SQLighter:
