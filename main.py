@@ -4,7 +4,7 @@ import asyncio
 from aiogram import executor
 
 from utils.sqliter import SQLighter
-from hendlers.handlers import dp
+from hendlers.handlers import DP
 from utils.parser import get_cars
 
 
@@ -23,4 +23,4 @@ if __name__ == '__main__':
 
     loop = asyncio.get_event_loop()
     loop.create_task(scheduler())
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(DP, skip_updates=True)
