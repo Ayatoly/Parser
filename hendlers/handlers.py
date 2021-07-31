@@ -41,7 +41,7 @@ async def unsubscribe_handler(message: types.Message) -> None:
         await message.answer('Вы успешно отписанны от рассылки ')
 
         
-async def send_messange_handler(url_a: str) -> None:
+async def send_message_handler(url_a: str) -> None:
     """Уведомление пользователей о новых машинах"""
     for i in db.get_all_ids():
         try:
