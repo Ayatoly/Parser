@@ -57,9 +57,10 @@ class SQLighter:
                  self.cursor.execute('INSERT INTO "Jeep_auto_ru"(links,price,city,date) VALUES (?,?,?,?)',
                                      (car[0], car[1], car[2], datetime.now()))
                  self.connection.commit()
-                 send_message_handler(car[0])
             except:
-                pass
+                print("Машина уже есть в базе")
+            else:
+                send_message_handler(car[0])
 
     def close(self) -> None:
         """Закрываем соединение с БД"""
