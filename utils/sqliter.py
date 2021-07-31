@@ -46,7 +46,6 @@ class SQLighter:
             except:
                  print('Он уже есть в базе')
 
-
     def update_subcriptions(self, user_id: int, status: bool) -> tuple:
         """Обновляем статус подписки"""
         return self.cursor.execute('UPDATE "id_users" SET "status" = ? WHERE "user_id" = ?',(status,user_id))
@@ -62,8 +61,6 @@ class SQLighter:
             except:
                 pass
 
-
     def close(self) -> None:
         """Закрываем соединение с БД"""
         self.connection.close()
-
