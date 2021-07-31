@@ -5,8 +5,8 @@ import sqlite3
 
 from utils.parser import get_cars
 
-sys.path.append("../hendlers/")
-from handlers import send_message_handler
+sys.path.append("..")
+from hendlers.handlers import send_message_handler
 
 
 class SQLighter:
