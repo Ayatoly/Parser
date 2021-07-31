@@ -5,7 +5,7 @@ import sqlite3
 
 from utils.parser import get_cars
 
-sys.path.append("../hendlers/")
+sys.path.append("../handlers/")
 from handlers import send_message_handler
 
 
