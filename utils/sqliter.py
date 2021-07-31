@@ -3,8 +3,6 @@ import sys
 from datetime import datetime
 import sqlite3
 
-from utils.parser import get_cars
-
 sys.path.append("..")
 from hendlers.handlers import send_message_handler
 
@@ -52,9 +50,8 @@ class SQLighter:
         """Обновляем статус подписки"""
         return self.cursor.execute('UPDATE "id_users" SET "status" = ? WHERE "user_id" = ?',(status,user_id))
 
-    def add_car(self) -> None:
+    def add_cars(self, cars: list) -> None:
         """Добавление машины в базу"""
-        cars = get_cars("https://auto.ru/moskva/cars/jeep/all/?sort=cr_date-desc&top_days=1")
         for car in cars:
             try:
                  self.cursor.execute('INSERT INTO "Jeep_auto_ru"(links,price,city,date) VALUES (?,?,?,?)',
