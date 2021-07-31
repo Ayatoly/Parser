@@ -1,8 +1,8 @@
 from datetime import datetime
 import sqlite3
 
-from parser import get_cars
-from hendlers import send_messange
+from utils.parser import get_cars
+from utils.hendlers import send_messange
 
 
 class SQLighter:
