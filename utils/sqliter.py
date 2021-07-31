@@ -14,11 +14,11 @@ class SQLighter:
         self.connection = sqlite3.connect('db.db')
         self.cursor = self.connection.cursor()
 
-    def get_all_ids(self) -> tuple:
+    def get_all_ids(self) -> list:
         """Список всех пользователей"""
         return self.cursor.execute('select * from "id_users"').fetchall()
 
-    def get_subscription(self, status: bool = True) -> tuple:
+    def get_subscription(self, status: bool = True) -> list:
         """Получаем всех активных подписчеков бота"""
         return self.cursor.execute(
             'SELECT * FROM "id_users" WHERE "status" = ?',
