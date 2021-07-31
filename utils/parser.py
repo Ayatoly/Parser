@@ -9,8 +9,9 @@ def get_html(url: str, params=None) -> str:
         'accept': '*/*'
     }
     r = requests.get(url, headers=headers, params=params)
+    r.encoding = "utf-8"
     if r.status_code == 200:
-        return r.content.decode('utf-8')
+        return r.text
     else:
         print("Bad status code {}".format(r.status_code))
         return ""
