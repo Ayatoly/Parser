@@ -1,7 +1,7 @@
 from datetime import datetime
 import sqlite3
 
-from parser import parce
+from parser import get_cars
 from hendlers import send_messange
 
 
@@ -52,12 +52,13 @@ class SQLighter:
 
     def add_car(self) -> None:
         """Добавление машины в базу"""
-        for i in parce():
+        cars = get_cars("https://auto.ru/moskva/cars/jeep/all/?sort=cr_date-desc&top_days=1")
+        for car in cars:
             try:
                  self.cursor.execute('INSERT INTO "Jeep_auto_ru"(links,price,city,date) VALUES (?,?,?,?)',
-                                     (i[0],i[1],i[2],datetime.now()))
+                                     (car[0], car[1], car[2], datetime.now()))
                  self.connection.commit()
-                 send_messange(i[0])
+                 send_messange(car[0])
             except:
                 pass
 
