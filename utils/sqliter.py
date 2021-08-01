@@ -1,10 +1,5 @@
-import sys
-
 from datetime import datetime
 import sqlite3
-
-sys.path.append("..")
-from hendlers.handlers import send_message_handler
 
 
 class SQLighter:
@@ -50,7 +45,7 @@ class SQLighter:
         """Обновляем статус подписки"""
         return self.cursor.execute('UPDATE "id_users" SET "status" = ? WHERE "user_id" = ?',(status,user_id))
 
-    async def add_cars(self, cars: list) -> None:
+    async def add_cars(self, cars: list) -> str:
         """Добавление машины в базу"""
         for car in cars:
             try:
@@ -60,7 +55,8 @@ class SQLighter:
             except:
                 print("Машина уже есть в базе")
             else:
-                await send_message_handler(car[0])
+                print("Машина успешно добавлена")
+                yield car[0]
 
     def close(self) -> None:
         """Закрываем соединение с БД"""

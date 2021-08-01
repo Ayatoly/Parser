@@ -2,13 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_html(url: str, params=None) -> str:
+def get_html(url: str) -> str:
     """Получение контента страницы"""
-    headers = {
-        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15',
-        'accept': '*/*'
-    }
-    r = requests.get(url, headers=headers, params=params)
+    r = requests.get(url)
     r.encoding = "utf-8"
     if r.status_code == 200:
         return r.text
@@ -16,7 +12,7 @@ def get_html(url: str, params=None) -> str:
         print("Bad status code {}".format(r.status_code))
         return ""
 
-    
+
 def get_cars(url: str) -> list:
     """Получение списка автомобилий"""
     cars_all = []
