@@ -42,6 +42,7 @@ class SQLighter:
     #             print('Он уже есть в базе')
     
     def add_subcripter(self, user_id: str, status: bool = True) -> None:
+        """Добавление пользователя в базу"""
         with self.connection:
             if user_id not in self.cursor.execute('select * from "id_users"').fetchall():
                 try:
@@ -51,9 +52,9 @@ class SQLighter:
 
     def update_subcriptions(self, user_id: int, status: bool):
         """Обновляем статус подписки"""
-        return self.cursor.execute('UPDATE "id_users" SET "status" = ? WHERE "user_id" = ?',(status,user_id))
+        return self.cursor.execute('UPDATE "id_users" SET "status" = ? WHERE "user_id" = ?', (status, user_id))
 
-    async def add_cars(self, cars: list) -> str:
+    async def add_cars(self, cars: list):
         """Добавление машины в базу"""
         for car in cars:
             try:
