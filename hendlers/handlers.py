@@ -39,7 +39,7 @@ async def unsubscribe_handler(message: types.Message) -> None:
         await message.answer('Вы и так не подписанны.')
     else:
         # Если он уже есть то просто обновляем ему статус подписки
-        DB.add_subcripter(message.from_user.id, False)
+        DB.update_subcriptions(message.from_user.id, False)
         await message.answer('Вы успешно отписанны от рассылки ')
 
 
