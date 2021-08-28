@@ -20,7 +20,7 @@ def get_cars(url: str) -> list:
     if not content:
         return cars_all
     soup = BeautifulSoup(content, 'html.parser')
-    cars = soup.findAll('div', class_='ListingItem-module__description')
+    cars = soup.findAll('div', class_='ListingItem')
     for car in cars:
         try:
             car_url = car.find('a', class_='Link ListingItemTitle__link').get('href')
@@ -31,5 +31,5 @@ def get_cars(url: str) -> list:
             print(car_url, car_region, car_price)
         except AttributeError:
             print("Данные не найдены для {}".format(car))
-    print(cars_all)
+
     return cars_all

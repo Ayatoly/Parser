@@ -6,7 +6,7 @@ class SQLighter:
 
     def __init__(self):
         """Подключаемся к БД и вызываем курсор соединения"""
-        self.connection = sqlite3.connect('db.db')
+        self.connection = sqlite3.connect('new_db.db')
         self.cursor = self.connection.cursor()
 
     def get_all_ids(self) -> list:
@@ -47,25 +47,29 @@ class SQLighter:
             if user_id not in self.cursor.execute('select * from "id_users"').fetchall():
                 try:
                     self.cursor.execute('INSERT INTO "id_users" ("user_id", "status") VALUES (?,?)', (user_id, status))
+                    self.connection.commit()
                 except:
                     print('Он уже есть в базе')
 
     def update_subcriptions(self, user_id: int, status: bool):
         """Обновляем статус подписки"""
-        return self.cursor.execute('UPDATE "id_users" SET "status" = ? WHERE "user_id" = ?', (status, user_id))
+        with self.connection:
+            self.cursor.execute('UPDATE "id_users" SET "status" = ? WHERE "user_id" = ?', (status, user_id))
+            self.connection.commit()
 
     async def add_cars(self, cars: list):
         """Добавление машины в базу"""
-        for car in cars:
-            try:
-                 self.cursor.execute('INSERT INTO "Jeep_auto_ru"(links,price,city,date) VALUES (?,?,?,?)',
-                                     (car[0], car[1], car[2], datetime.now()))
-                 self.connection.commit()
-            except:
-                print("Машина уже есть в базе")
-            else:
-                print("Машина успешно добавлена")
-                yield car[0]
+        with self.connection:
+            for car in cars:
+                try:
+                    self.cursor.execute('INSERT INTO "Jeep_auto_ru"(links,price,city,date) VALUES (?,?,?,?)',
+                                      (car[0], car[1], car[2], datetime.now()))
+                    self.connection.commit()
+                except:
+                    print("Машина уже есть в базе")
+                else:
+                    print("Машина успешно добавлена")
+                    yield car[0]
 
     def close(self) -> None:
         """Закрываем соединение с БД"""

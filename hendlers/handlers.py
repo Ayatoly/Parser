@@ -37,6 +37,7 @@ async def unsubscribe_handler(message: types.Message) -> None:
         # если юзера нет в базе, добавляем его в базу с неактивной подпиской
         DB.add_subcripter(message.from_user.id, False)
         await message.answer('Вы и так не подписанны.')
+
     else:
         # Если он уже есть то просто обновляем ему статус подписки
         DB.update_subcriptions(message.from_user.id, False)
@@ -47,9 +48,10 @@ async def send_message_handler(url_a: str) -> None:
     """Уведомление пользователей о новых машинах"""
     for i in DB.get_all_ids():
         try:
-            await DP.bot.send_message(
-                int(i[1]),
-                f"Появился новый автомобиль на auto.ru {url_a}"
-            )
+            if int(i[2]) == 1:
+                await DP.bot.send_message(
+                    int(i[1]),
+                    f"Появился новый автомобиль на auto.ru {url_a}"
+                )
         except Exception as e0:
             print("Произошла ошибка в момент отправки сообщения - {}".format(e0))

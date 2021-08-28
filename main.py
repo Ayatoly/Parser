@@ -18,7 +18,7 @@ async def scheduler():
         cars = get_cars("https://auto.ru/moskva/cars/jeep/all/?sort=cr_date-desc&top_days=1")
         async for car in sql_obj.add_cars(cars):
             await send_message_handler(car)
-        await asyncio.sleep(30)
+        await asyncio.sleep(3000)
 
 
 if __name__ == '__main__':
