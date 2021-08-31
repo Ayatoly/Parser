@@ -1,6 +1,10 @@
 import sys
 
 from aiogram import Bot, Dispatcher, types
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.dispatcher import FSMContext
+
+from States import Tuning
 
 sys.path.append("..")
 from utils.sqliter import SQLighter
@@ -9,14 +13,62 @@ from config import BOT_TOKEN
 
 DB = SQLighter()
 BOT = Bot(token=BOT_TOKEN)
-DP = Dispatcher(BOT)
+DP = Dispatcher(BOT,storage=MemoryStorage())
+
+
+
+@DP.message_handler(commands=['tuning'])
+async def enter_tuning(message:types.Message):
+    keyboard_markup = types.ReplyKeyboardMarkup(row_width=3)
+    """default row_width is 3, so here we can omit it actually"""
+    """"" kept for clearness """
+
+    btns_text = ('Пользовался!', 'Еще нет','Показать тюнинг сервисы')
+    keyboard_markup.row(*(types.KeyboardButton(text) for text in btns_text))
+    await message.reply("Пользовались тюнинг сервисами?", reply_markup=keyboard_markup)
+
+@DP.message_handler()
+async def all_msg_handler(message: types.Message):
+    button_text = message.text
+    if button_text == "Пользовался!":
+        await message.reply("Как назывался сервис в каком городе он находится?", reply_markup=types.ReplyKeyboardRemove())
+        await Tuning.Q1.set()
+
+    elif button_text == 'Еще нет':
+        await message.reply("ну лан", reply_markup=types.ReplyKeyboardRemove())
+
+    elif button_text == 'Показать тюнинг сервисы':
+        await message.reply("я пока их не знаю", reply_markup=types.ReplyKeyboardRemove())
+    else:
+        await message.reply("Что это было? Ты должен был нажать на кнопку! MAZAFAKA", reply_markup=types.ReplyKeyboardRemove())
+
+@DP.message_handler(state=Tuning.Q1)
+async def answer_q1(message: types.Message, state: FSMContext):
+    answer = message.text
+    async with state.proxy() as data:
+        data["answer1"] = answer
+    await message.answer("Расскажите о послднем визите")
+    await Tuning.next()
+
+@DP.message_handler(state=Tuning.Q2)
+async def answer_q2(message: types.Message, state: FSMContext):
+    data = await state.get_data()
+    answer1 = data.get("answer1")
+    answer2 = message.text
+    await message.answer("Спасибо за ваши ответы!")
+    print(answer1,answer2)
+    await state.finish()
 
 
 @DP.message_handler(commands=['start'])
 async def start_handler(message: types.Message) -> None:
     """Приветствие"""
-    await BOT.send_photo(chat_id=message.from_user.id,
-                         photo='https://sun9-17.userapi.com/impf/c625430/v625430425/4ca25/jsCLXjqIy-M.jpg?size=604x229&quality=96&sign=0da7630d8a112982acec2a4801179f23&type=album')
+    if not DB.subcripter_exists(message.from_user.id):
+        DB.add_subcripter(message.from_user.id)
+    await message.answer('Наш бот, это автоматизированный сбор открытой информации! \n'
+                         'который «вытаскивают» нужную информацию и представляют ее в структурированном виде.\n'
+                         'В ближайшее время тут появится информация и ссылки на тюнинг центры \n'
+                         'А так же аукцион JEEP где можно будет продать свой автомбиль в обход перекупщиков и салонов')
 
 
 @DP.message_handler(commands=['subscribe'])

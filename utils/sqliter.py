@@ -28,19 +28,6 @@ class SQLighter:
         ).fetchall()
         return bool(len(result))
 
-    #def add_subcripter(self, user_id: int, status: bool = True) -> None:
-    #    """Добавление пользователя в базу"""
-    #    user_ids = self.cursor.execute('select * from "id_users"').fetchall()
-    #    if user_id not in user_ids:
-    #        try:
-    #             self.cursor.execute(
-    #                'INSERT INTO "id_users" ("user_id","status") VALUES (?,?)',
-    #                (user_id, status)
-    #            )
-    #             self.connection.commit()
-    #        except:
-    #             print('Он уже есть в базе')
-    
     def add_subcripter(self, user_id: str, status: bool = True) -> None:
         """Добавление пользователя в базу"""
         with self.connection:
